@@ -12,13 +12,40 @@ class Card {
   }
 }
 
+class Deck {
+  constructor() {
+    this.cards = [];
+  }
+  createFull() {
+    //function to create a full deck of 52  cards
+    if (this.cards.length > 0) {
+      throw new Error("You can only make a full deck from an empty one!");
+    }
+    for (let rankPos = 0; rankPos < 13; rankPos++) {
+      const newClub = new Card("Club", rankPos + 1);
+      const newHeart = new Card("Heart", rankPos + 1);
+      const newDiamond = new Card("Diamond", rankPos + 1);
+      const newSpade = new Card("Spade", rankPos + 1);
+
+      this.cards.push(newClub);
+      this.cards.push(newHeart);
+      this.cards.push(newDiamond);
+      this.cards.push(newSpade);
+    }
+  }
+}
+
+newDeck = new Deck();
+newDeck.createFull();
+
 /*
     Card 
         member : should have a suit (symbol)
         member : should have a rank (number value)
-        function : compare two cards by rank then suit [2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A ] suit doesnt matter 13 ranks [clubs, diamonds, hearts, spades]
+        function : compare two cards by rank then suit [2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A ]13 suits shouldnt be compared [clubs, diamonds, hearts, spades]4
     Deck
         member : array of cards[]
+        function : create a new deck
         function : shuffle the deck
         function : split deck into two
     Player 
