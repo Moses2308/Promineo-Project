@@ -42,13 +42,30 @@ class Deck {
       this.cards[j] = temp;
     }
   }
+  split(player1, player2) {
+    player1.deck = this.cards.slice(0, this.cards.length / 2);
+    player2.deck = this.cards.slice(this.cards.length / 2);
+  }
 }
 
-newDeck = new Deck();
+class Player {
+  constructor() {
+    this.deck = null;
+    this.score = 0;
+  }
+}
+
+const newDeck = new Deck();
 newDeck.createFull();
-console.log(newDeck.cards);
 newDeck.shuffle();
-console.log(newDeck.cards);
+const player1 = new Player();
+const player2 = new Player();
+newDeck.split(player1, player2);
+console.log(player1.deck.length);
+console.log(player1.deck);
+console.log(player2.deck.length);
+console.log(player2.deck);
+
 /*
     Card 
         member : should have a suit (symbol)
@@ -58,9 +75,6 @@ console.log(newDeck.cards);
         member : array of cards[]
         function : create a new deck
         function : shuffle the deck
-            we have a pool of indices
-            we pick a random index from it push it, and remove the value;
-            we repeat until array is empty
         function : split deck into two
     Player 
         member : a deck
