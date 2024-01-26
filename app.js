@@ -33,11 +33,22 @@ class Deck {
       this.cards.push(newSpade);
     }
   }
+  shuffle() {
+    //randomizes the deck
+    for (let i = this.cards.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = this.cards[i];
+      this.cards[i] = this.cards[j];
+      this.cards[j] = temp;
+    }
+  }
 }
 
 newDeck = new Deck();
 newDeck.createFull();
-
+console.log(newDeck.cards);
+newDeck.shuffle();
+console.log(newDeck.cards);
 /*
     Card 
         member : should have a suit (symbol)
@@ -47,6 +58,9 @@ newDeck.createFull();
         member : array of cards[]
         function : create a new deck
         function : shuffle the deck
+            we have a pool of indices
+            we pick a random index from it push it, and remove the value;
+            we repeat until array is empty
         function : split deck into two
     Player 
         member : a deck
