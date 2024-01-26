@@ -43,14 +43,15 @@ class Deck {
     }
   }
   split(player1, player2) {
-    player1.deck = this.cards.slice(0, this.cards.length / 2);
-    player2.deck = this.cards.slice(this.cards.length / 2);
+    //assigns half of the deck to each player
+    player1.deck.cards = this.cards.slice(0, this.cards.length / 2);
+    player2.deck.cards = this.cards.slice(this.cards.length / 2);
   }
 }
 
 class Player {
   constructor() {
-    this.deck = null;
+    this.deck = new Deck();
     this.score = 0;
   }
 }
@@ -61,36 +62,71 @@ newDeck.shuffle();
 const player1 = new Player();
 const player2 = new Player();
 newDeck.split(player1, player2);
-console.log(player1.deck.length);
-console.log(player1.deck);
-console.log(player2.deck.length);
-console.log(player2.deck);
 
-/*
-    Card 
-        member : should have a suit (symbol)
-        member : should have a rank (number value)
-        function : compare two cards by rank then suit [2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A ]13 suits shouldnt be compared [clubs, diamonds, hearts, spades]4
-    Deck
-        member : array of cards[]
-        function : create a new deck
-        function : shuffle the deck
-        function : split deck into two
-    Player 
-        member : a deck
-        member : a score
+const p1Cards = player1.deck.cards;
+const p2Cards = player2.deck.cards;
 
-    who should be in charge of splitting decks
+let counter = 1;
+while (p1Cards.length > 0 && p2Cards.length > 0) {
+  if (p1Cards[p1Cards.length - 1].compareTo(p2Cards[p2Cards.length - 1])) {
+    console.log(`
+    Turn ${counter};
+    Player One : ${p1Cards[p1Cards.length - 1].suit} - ${
+      p1Cards[p1Cards.length - 1].rank
+    };
+    Player Two : ${p2Cards[p2Cards.length - 1].suit} - ${
+      p2Cards[p2Cards.length - 1].rank
+    };
+    Point awarded to Player One
+    `);
+    player1.score++;
+  } else if (
+    p2Cards[p2Cards.length - 1].compareTo(p1Cards[p1Cards.length - 1])
+  ) {
+    console.log(`
+    Turn ${counter};
+    Player One : ${p1Cards[p1Cards.length - 1].suit} - ${
+      p1Cards[p1Cards.length - 1].rank
+    };
+    Player Two : ${p2Cards[p2Cards.length - 1].suit} - ${
+      p2Cards[p2Cards.length - 1].rank
+    };
+    Point awarded to Player Two
+    `);
+    player2.score++;
+  } else {
+    console.log(`
+    Turn ${counter};
+    Player One : ${p1Cards[p1Cards.length - 1].suit} - ${
+      p1Cards[p1Cards.length - 1].rank
+    };
+    Player Two : ${p2Cards[p2Cards.length - 1].suit} - ${
+      p2Cards[p2Cards.length - 1].rank
+    };
+    TIE! No points awarded
+    `);
+  }
+  p1Cards.pop();
+  p2Cards.pop();
+  counter++;
+}
 
-    HOW THE GAME WORKS
-        (deck) shuffle main deck
-        split deck into two
-        assign half decks to players
-        top cards are revealed
-        cards are compared
-        
-        if cards are different
-            player with greater rank wins
-        if cards are the same
-            neither player wins
-*/
+if (player1.score > player2.score) {
+  console.log(`
+  Player one final Score : ${player1.score};
+  Player two final Score : ${player2.score};
+  PLAYER ONE WINS!
+  `);
+} else if (player2.score > player1.score) {
+  console.log(`
+  Player one final Score : ${player1.score};
+  Player two final Score : ${player2.score};
+  PLAYER TWO WINS!
+  `);
+} else {
+  console.log(`
+  Player one final Score : ${player1.score};
+  Player two final Score : ${player2.score};
+  WE ARE ALL WINNERS!!
+  `);
+}
